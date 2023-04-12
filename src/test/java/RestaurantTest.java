@@ -4,6 +4,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,4 +68,31 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+    @Test
+    public void calculate_order_total_returns_total_cost_of_added_items(){
+        ArrayList<String> items =  new ArrayList<String>();
+        items.add("Vegetable lasagne");
+        assertEquals(269,restaurant.calculateOrderTotal(items));
+    }
+
+    @Test
+    public void adding_item_to_list_should_increase_total_cost(){
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("Sweet corn soup");
+        assertEquals(119,restaurant.calculateOrderTotal(items));
+        items.add("Vegetable lasagne");
+        assertEquals(388,restaurant.calculateOrderTotal(items));
+    }
+
+    @Test
+    public void total_price_decreases_if_items_are_removed_from_list(){
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("Sweet corn soup");
+        items.add("Vegetable lasagne");
+        assertEquals(388,restaurant.calculateOrderTotal(items));
+        items.remove("Vegetable lasagne");
+        assertEquals(119,restaurant.calculateOrderTotal(items));
+    }
 }
